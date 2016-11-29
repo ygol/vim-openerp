@@ -251,7 +251,7 @@ snippet wizard osv_memory menu < 7.0
 	    </field>
 	</record>
 	
-	<record model="ir.actions.act_window" id="action_$1_view">
+	<record id="action_$1_view" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="type">ir.actions.act_window</field>
 	    <field name="res_model">$2</field>
@@ -285,7 +285,7 @@ snippet wizard osv_memory menu >= 7.0
 	    </field>
 	</record>
 	
-	<record model="ir.actions.act_window" id="$1_wizard_action">
+	<record id="$1_wizard_action" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="res_model">$2</field>
 	    <field name="view_type">form</field>
@@ -311,7 +311,7 @@ snippet wizard osv_memory toolbar
 	    </field>
 	</record>
 	
-	<record model="ir.actions.act_window" id="action_$1_view">
+	<record id="action_$1_view" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="type">ir.actions.act_window</field>
 	    <field name="res_model">$2</field>
@@ -322,7 +322,7 @@ snippet wizard osv_memory toolbar
 	    <field name="target">new</field>
 	</record>
 	
-	<record model="ir.values" id="wizard_$1">
+	<record id="wizard_$1" model="ir.values">
 	    <field name="name">$3</field>
 	    <field name="object" eval="1"/>
 	    <field name="key">action</field>
@@ -450,7 +450,7 @@ snippet view both (tree, form) + Action + Menu
 	    </field>
 	</record>
 	
-	<record model="ir.actions.act_window" id="act_open_$1_view">
+	<record id="act_open_$1_view" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="type">ir.actions.act_window</field>
 	    <field name="res_model">$2</field>
@@ -460,14 +460,14 @@ snippet view both (tree, form) + Action + Menu
 	    <field name="context">{}</field>
 	</record>
 	
-	<record model="ir.actions.act_window.view" id="act_open_$1_view_form">
+	<record id="act_open_$1_view_form" model="ir.actions.act_window.view">
 	    <field name="act_window_id" ref="act_open_$1_view"/>
 	    <field name="sequence" eval="20"/>
 	    <field name="view_mode">form</field>
 	    <field name="view_id" ref="view_$1_form"/>
 	</record>
 	
-	<record model="ir.actions.act_window.view" id="act_open_$1_view_tree">
+	<record id="act_open_$1_view_tree" model="ir.actions.act_window.view">
 	    <field name="act_window_id" ref="act_open_$1_view"/>
 	    <field name="sequence" eval="10"/>
 	    <field name="view_mode">tree</field>
@@ -515,7 +515,7 @@ snippet view both (tree, form, search) + Action + Menu
 	    </field>
 	</record>
 	
-	<record model="ir.actions.act_window" id="act_open_$1_view">
+	<record id="act_open_$1_view" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="type">ir.actions.act_window</field>
 	    <field name="res_model">$2</field>
@@ -526,14 +526,14 @@ snippet view both (tree, form, search) + Action + Menu
 	    <field name="context">{}</field>
 	</record>
 	
-	<record model="ir.actions.act_window.view" id="act_open_$1_view_form">
+	<record id="act_open_$1_view_form" model="ir.actions.act_window.view">
 	    <field name="act_window_id" ref="act_open_$1_view"/>
 	    <field name="sequence" eval="20"/>
 	    <field name="view_mode">form</field>
 	    <field name="view_id" ref="view_$1_form"/>
 	</record>
 	
-	<record model="ir.actions.act_window.view" id="act_open_$1_view_tree">
+	<record id="act_open_$1_view_tree" model="ir.actions.act_window.view">
 	    <field name="act_window_id" ref="act_open_$1_view"/>
 	    <field name="sequence" eval="10"/>
 	    <field name="view_mode">tree</field>
