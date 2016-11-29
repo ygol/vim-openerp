@@ -3,13 +3,13 @@ snippet <?
 snippet oerp
 	<openerp>
 	    <data>
-	    $1
+	        ${1}
 	    </data>
 	</openerp>
 snippet openerp
 	<openerp>
 	    <data>
-	    $1
+	        ${1}
 	    </data>
 	</openerp>
 snippet field <field ... />
@@ -26,7 +26,7 @@ snippet field <field eval="xxx"... />
 	<field name="${1:Field}" eval="${2:Value}"/>
 snippet field <field name="arch" type="xml"></field>
 	<field name="arch" type="xml">
-	    $1
+	    ${1}
 	</field>
 snippet button
 	<button string="${1:Validate}" icon="${2:gtk-ok}" states="${3:draft}" type="${4:object}" name="${5:to_validate}"/>
@@ -66,7 +66,7 @@ snippet separator
 	<separator string="${1:Label}" colspan="${2:4}"/>
 snippet group
 	<group colspan="${1:4}">
-	    $2
+	    ${2}
 	</group>
 snippet notebook
 	<notebook colspan="4">
@@ -192,11 +192,11 @@ snippet kanban
 	</kanban>
 snippet header
 	<header>
-	    $1
+	    ${1}
 	</header>
 snippet sheet
 	<sheet>
-	    $1
+	    ${1}
 	</sheet>
 snippet menuitem Action < 7.0
 	<menuitem id="menu_${1:ir_model_data}" 
@@ -214,18 +214,23 @@ snippet menuitem Name < 7.0
 	    parent="menu_${2:menu_parent}"
 	    sequence="${3:20}"
 	    name="${4:Label}"/>
+snippet menuitem Name >= 7.0
+	<menuitem id="${1:ir_model_data}_menu" 
+	    parent="${2:menu_parent}_menu"
+	    sequence="${3:20}"
+	    name="${4:Label}"/>
 snippet menuitem Server Action
-	<record id="action_${1:refid_server}" model="ir.actions.server">
+	<record id="${1:refid_server}_action" model="ir.actions.server">
 	    <field name="name">${2:Name of the action}</field>
-	    <field name="model_id" ref="model_${3:res_partner}"/>
+	    <field name="model_id" ref="${3:res_partner}_model"/>
 	    <field name="state">code</field>
 	    <field name="code">action = obj.${4:my_function}()</field>
 	</record>
 	
-	<menuitem name="$2"
-	    action="action_$1"
-	    id="menu_$1" 
+	<menuitem id="$1_menu"
 	    parent="base.menu_config"
+	    name="$2"
+	    action="$1_action"
 	    type="server" icon="STOCK_EXECUTE" sequence="100" />
 snippet wizard <wizard/>
 	<wizard id="wizard_${1:name}"
@@ -267,12 +272,12 @@ snippet wizard osv_memory menu < 7.0
 	    sequence="${7:20}"
 	    action="action_$1_view"/>
 snippet wizard osv_memory menu >= 7.0
-	<record id="view_${1:model}_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="${1:model}_view_form" model="ir.ui.view">
+	    <field name="name">$2.view.form</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="priority" eval="8"/>
 	    <field name="arch" type="xml">
-		<form string="${3:Label}" col="4" version="7.0">
+		<form string="${3:Label}" col="4">
 		    <group colspan="2">
 			<field name="${4:name}"/>
 		    </group>
@@ -299,8 +304,8 @@ snippet wizard osv_memory menu >= 7.0
 	    sequence="${7:20}"
 	    action="$1_wizard_action"/>
 snippet wizard osv_memory toolbar
-	<record id="view_${1:model}_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="${1:model}_view_form" model="ir.ui.view">
+	    <field name="name">$2.view.form</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">form</field>
 	    <field name="priority" eval="8"/>
@@ -311,7 +316,7 @@ snippet wizard osv_memory toolbar
 	    </field>
 	</record>
 	
-	<record id="action_$1_view" model="ir.actions.act_window">
+	<record id="$1_action" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="type">ir.actions.act_window</field>
 	    <field name="res_model">$2</field>
@@ -322,17 +327,17 @@ snippet wizard osv_memory toolbar
 	    <field name="target">new</field>
 	</record>
 	
-	<record id="wizard_$1" model="ir.values">
+	<record id="$1_wizard" model="ir.values">
 	    <field name="name">$3</field>
 	    <field name="object" eval="1"/>
 	    <field name="key">action</field>
 	    <field name="key2">client_action_multi</field>
-	    <field name="model">${5:Model to launch wizard}</field>
-	    <field name="value" eval="'ir.actions.act_window,' + str(ref('action_$1_view'))" />
+	    <field name="model">${4:Model to launch wizard}</field>
+	    <field name="value" eval="'ir.actions.act_window,' + str(ref('$1_action'))" />
 	</record>
 snippet view form
-	<record id="view_${1:model}_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="${1:model}_view_form" model="ir.ui.view">
+	    <field name="name">$2.view.form</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">form</field>
 	    <field name="priority" eval="8"/>
@@ -343,8 +348,8 @@ snippet view form
 	    </field>
 	</record>
 snippet view tree
-	<record id="view_${1:model}_tree" model="ir.ui.view">
-	    <field name="name">$2.tree</field>
+	<record id="${1:model}_view_tree" model="ir.ui.view">
+	    <field name="name">$2.view.tree</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">tree</field>
 	    <field name="priority" eval="8"/>
@@ -355,8 +360,8 @@ snippet view tree
 	    </field>
 	</record>
 snippet view search
-	<record id="view_${1:model}_search" model="ir.ui.view">
-	    <field name="name">$2.search</field>
+	<record id="${1:model}_view_search" model="ir.ui.view">
+	    <field name="name">$2.view.search</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">search</field>
 	    <field name="priority" eval="8"/>
@@ -367,8 +372,8 @@ snippet view search
 	    </field>
 	</record>
 snippet view both (tree, form)
-	<record id="view_${1:model}_tree" model="ir.ui.view">
-	    <field name="name">$2.tree</field>
+	<record id="${1:model}_view_tree" model="ir.ui.view">
+	    <field name="name">$2.view.tree</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">tree</field>
 	    <field name="priority" eval="8"/>
@@ -379,8 +384,8 @@ snippet view both (tree, form)
 	    </field>
 	</record>
 	
-	<record id="view_$1_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="$1_view_form" model="ir.ui.view">
+	    <field name="name">$2.view.form</field>
 	    <field name="model">$2</field>
 	    <field name="type">form</field>
 	    <field name="priority" eval="8"/>
@@ -391,8 +396,8 @@ snippet view both (tree, form)
 	    </field>
 	</record>
 snippet view both (tree, form, search)
-	<record id="view_${1:model}_tree" model="ir.ui.view">
-	    <field name="name">$2.tree</field>
+	<record id="${1:model}_view_tree" model="ir.ui.view">
+	    <field name="name">$2.view.tree</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">tree</field>
 	    <field name="priority" eval="8"/>
@@ -403,8 +408,8 @@ snippet view both (tree, form, search)
 	    </field>
 	</record>
 	
-	<record id="view_$1_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="$1_view_form" model="ir.ui.view">
+	    <field name="name">$2.view.form</field>
 	    <field name="model">$2</field>
 	    <field name="type">form</field>
 	    <field name="priority" eval="8"/>
@@ -414,8 +419,9 @@ snippet view both (tree, form, search)
 		</form>
 	    </field>
 	</record>
-	<record id="view_$1_search" model="ir.ui.view">
-	    <field name="name">$2.search</field>
+
+	<record id="$1_view_search" model="ir.ui.view">
+	    <field name="name">$2.view.search</field>
 	    <field name="model">$2</field>
 	    <field name="type">search</field>
 	    <field name="priority" eval="8"/>
@@ -426,8 +432,8 @@ snippet view both (tree, form, search)
 	    </field>
 	</record>
 snippet view both (tree, form) + Action + Menu
-	<record id="view_${1:model}_tree" model="ir.ui.view">
-	    <field name="name">$2.tree</field>
+	<record id="${1:model}_view_tree" model="ir.ui.view">
+	    <field name="name">$2.view.tree</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">tree</field>
 	    <field name="priority" eval="8"/>
@@ -438,8 +444,8 @@ snippet view both (tree, form) + Action + Menu
 	    </field>
 	</record>
 	
-	<record id="view_$1_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="$1_view_form" model="ir.ui.view">
+	    <field name="name">$2.view.form</field>
 	    <field name="model">$2</field>
 	    <field name="type">form</field>
 	    <field name="priority" eval="8"/>
@@ -450,7 +456,7 @@ snippet view both (tree, form) + Action + Menu
 	    </field>
 	</record>
 	
-	<record id="act_open_$1_view" model="ir.actions.act_window">
+	<record id="$1_action" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="type">ir.actions.act_window</field>
 	    <field name="res_model">$2</field>
@@ -460,27 +466,27 @@ snippet view both (tree, form) + Action + Menu
 	    <field name="context">{}</field>
 	</record>
 	
-	<record id="act_open_$1_view_form" model="ir.actions.act_window.view">
-	    <field name="act_window_id" ref="act_open_$1_view"/>
+	<record id="$1_action_form" model="ir.actions.act_window.view">
+	    <field name="act_window_id" ref="$1_action"/>
 	    <field name="sequence" eval="20"/>
 	    <field name="view_mode">form</field>
-	    <field name="view_id" ref="view_$1_form"/>
+	    <field name="view_id" ref="$1_view_form"/>
 	</record>
 	
-	<record id="act_open_$1_view_tree" model="ir.actions.act_window.view">
-	    <field name="act_window_id" ref="act_open_$1_view"/>
+	<record id="$1_action_tree" model="ir.actions.act_window.view">
+	    <field name="act_window_id" ref="$1_action"/>
 	    <field name="sequence" eval="10"/>
 	    <field name="view_mode">tree</field>
-	    <field name="view_id" ref="view_$1_tree"/>
+	    <field name="view_id" ref="$1_view_tree"/>
 	</record>
 
-	<menuitem id="menu_$1"
+	<menuitem id="$1_menu"
 	    parent="${5:module.xmlid}"
 	    sequence="20"
-	    action="act_open_$1_view"/>
+	    action="$1_action"/>
 snippet view both (tree, form, search) + Action + Menu
-	<record id="view_${1:model}_tree" model="ir.ui.view">
-	    <field name="name">$2.tree</field>
+	<record id="${1:model}_view_tree" model="ir.ui.view">
+	    <field name="name">$2.view.tree</field>
 	    <field name="model">${2:Model}</field>
 	    <field name="type">tree</field>
 	    <field name="priority" eval="8"/>
@@ -491,8 +497,8 @@ snippet view both (tree, form, search) + Action + Menu
 	    </field>
 	</record>
 	
-	<record id="view_$1_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="$1_view_form" model="ir.ui.view">
+	    <field name="name">$2.view.form</field>
 	    <field name="model">$2</field>
 	    <field name="type">form</field>
 	    <field name="priority" eval="8"/>
@@ -503,8 +509,8 @@ snippet view both (tree, form, search) + Action + Menu
 	    </field>
 	</record>
 	
-	<record id="view_$1_search" model="ir.ui.view">
-	    <field name="name">$2.search</field>
+	<record id="$1_view_search" model="ir.ui.view">
+	    <field name="name">$2.view.search</field>
 	    <field name="model">$2</field>
 	    <field name="type">search</field>
 	    <field name="priority" eval="8"/>
@@ -515,51 +521,63 @@ snippet view both (tree, form, search) + Action + Menu
 	    </field>
 	</record>
 	
-	<record id="act_open_$1_view" model="ir.actions.act_window">
+	<record id="$1_action" model="ir.actions.act_window">
 	    <field name="name">$3</field>
 	    <field name="type">ir.actions.act_window</field>
 	    <field name="res_model">$2</field>
 	    <field name="view_type">form</field>
 	    <field name="view_mode">tree,form</field>
-	    <field name="search_view_id" ref="view_$1_search"/>
+	    <field name="search_view_id" ref="$1_view_search"/>
 	    <field name="domain">[]</field>
 	    <field name="context">{}</field>
 	</record>
 	
-	<record id="act_open_$1_view_form" model="ir.actions.act_window.view">
-	    <field name="act_window_id" ref="act_open_$1_view"/>
+	<record id="$1_action_form" model="ir.actions.act_window.view">
+	    <field name="act_window_id" ref="$1_action"/>
 	    <field name="sequence" eval="20"/>
 	    <field name="view_mode">form</field>
-	    <field name="view_id" ref="view_$1_form"/>
+	    <field name="view_id" ref="$1_view_form"/>
 	</record>
 	
-	<record id="act_open_$1_view_tree" model="ir.actions.act_window.view">
-	    <field name="act_window_id" ref="act_open_$1_view"/>
+	<record id="$1_action_tree" model="ir.actions.act_window.view">
+	    <field name="act_window_id" ref="$1_action"/>
 	    <field name="sequence" eval="10"/>
 	    <field name="view_mode">tree</field>
-	    <field name="view_id" ref="view_$1_tree"/>
+	    <field name="view_id" ref="$1_view_tree"/>
 	</record>
 
-	<menuitem id="menu_$1"
+	<menuitem id="$1_menu"
 	    parent="${5:module.xmlid}"
 	    sequence="20"
-	    action="act_open_$1_view"/>
+	    action="$1_action"/>
 snippet view form (inherit)
-	<record id="view_${1:model}_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
+	<record id="${1:model}_view_form_inherit_${3:module_name}" model="ir.ui.view">
+	    <field name="name">$2.view.form.inherit.$3</field>
 	    <field name="model">${2:Model}</field>
-	    <field name="inherit_id" ref="${3:xmlid}"/>
+	    <field name="inherit_id" ref="${4:xmlid}"/>
 	    <field name="priority" eval="8"/>
 	    <field name="arch" type="xml">
 		<xpath expr="//notebook" position="inside">
-		    <page string="${4:text}">
-		        <field name="${5:name}"/>
+		    <page string="${5:text}">
+		        <field name="${6:name}"/>
 		    </page>
 		</xpath>
 	    </field>
 	</record>
+snippet view tree (inherit)
+	<record id="${1:model}_view_tree_inherit_${3:module_name}" model="ir.ui.view">
+	    <field name="name">$2.view.tree.inherit.$3</field>
+	    <field name="model">${2:Model}</field>
+	    <field name="inherit_id" ref="${4:xmlid}"/>
+	    <field name="priority" eval="8"/>
+	    <field name="arch" type="xml">
+		<field name="name" position="after">
+		    <field name="${5:name}"/>
+		</field>
+	    </field>
+	</record>
 snippet act_window
-	<act_window id="act_${1:ir_model_data}"
+	<act_window id="${1:ir_model_data}_action"
 	    name="${2:Name}"
 	    res_model="${3:destination_model}"
 	    src_model="${4:source_model}"
