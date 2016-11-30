@@ -817,3 +817,38 @@ snippet env with_context
 	self.env.with_context(${1:context})${2}
 snippet env sudo
 	self.env.sudo(${1:uid})${2}
+snippet manifest
+	{
+	    'name': '${1:module}',
+	    'summary': 'Short $1 Summary',
+	    'version': '1.0',
+	    'depends': ['base'],
+	    'author': '${2:`g:snips_author`}',
+	    'contributors': '',
+	    'maintainer' : '',
+	    'license' : (
+	        'GPL-2',
+	        'GPL-2 or any later version',
+	        'GPL-3',
+	        'GPL-3 or any later version',
+	        'AGPL-3',
+	        'Other OSI approved licence',
+	        'Other proprietary',
+	    )
+	    'website':'http://${3:www.example.org}',
+	    'category': '${4:Extra Tools}',
+	    'description': '''
+	    Description text
+
+	    For $1 application.
+	    ''',
+	    'data': [
+	        'security/ir.model.access.csv',
+	        'views/$1_views.xml',
+	    ],
+	    'demo': ['data/demo.xml',],
+	    'test': [],
+	    'qweb': [],
+	    'sequence': 10,
+	    'installable': True,
+	}
