@@ -825,18 +825,10 @@ snippet manifest
 	    'depends': ['base'],
 	    'author': '${2:`g:snips_author`}',
 	    'contributors': '',
-	    'maintainer' : '',
-	    'license' : (
-	        'GPL-2',
-	        'GPL-2 or any later version',
-	        'GPL-3',
-	        'GPL-3 or any later version',
-	        'AGPL-3',
-	        'Other OSI approved licence',
-	        'Other proprietary',
-	    )
-	    'website':'http://${3:www.example.org}',
-	    'category': '${4:Extra Tools}',
+	    'maintainer': '',
+	    'license': '${3:AGPL-3}',
+	    'website': 'http://${4:www.example.org}',
+	    'category': '${5:Extra Tools}',
 	    'description': '''
 	    Description text
 
@@ -846,9 +838,10 @@ snippet manifest
 	        'security/ir.model.access.csv',
 	        'views/$1_views.xml',
 	    ],
-	    'demo': ['data/demo.xml',],
+	    'demo': ['data/demo.xml'],
 	    'test': [],
 	    'qweb': [],
 	    'sequence': 10,
 	    'installable': True,
+	    'application': True,
 	}
