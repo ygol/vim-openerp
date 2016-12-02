@@ -701,6 +701,13 @@ snippet deff
 snippet defs
 	def ${1:mname}(self, ${2:arg}):
 	    ${3:pass}
+# Override method
+snippet defo No params
+	def ${1:fname}(self):
+	    return super(${2:cname}, self).$1()
+snippet defo With params
+	def ${1:fname}(self, ${2:params}):
+	    return super(${3:cname}, self).$1($2)
 # New Property
 snippet property
 	def ${1:foo}():
