@@ -581,7 +581,8 @@ snippet act_window
 	    name="${2:Name}"
 	    res_model="${3:destination_model}"
 	    src_model="${4:source_model}"
-	    domain="[('${5:field}', '${6:operator}', ${7:active_id})]"/>
+	    context="{${5:context}}"
+	    domain="[('${6:field}', '${7:operator}', ${8:active_id})]"/>
 snippet xpath after
 	<xpath expr="//field[@${1:name}='${2:field}']" position="after">
 	    <field name="${3:name}"/>
