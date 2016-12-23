@@ -78,9 +78,7 @@ snippet page
 	<page string="${1:Label}">
 	    $2
 	</page>
-snippet label < 7.0
-	<label string="${1:Label}"/>
-snippet label >= 7.0
+snippet label
 	<label for="${2:Field}" string="${1:Label}"/>
 snippet attribute
 	<attribute name="${1:name}">${2:value}</attribute>
@@ -130,18 +128,12 @@ snippet noupdate
 	noupdate="1"
 snippet confirm
 	confirm="Are you sure ?"
-snippet version
-	version="7.0"
 snippet tree
 	<tree string="${1:Label}">
 	    $2
 	</tree>
-snippet form < 7.0
+snippet form
 	<form string="${1:Label}">
-	    $2
-	</form>
-snippet form >= 7.0
-	<form string="${1:Label}" version="7.0">
 	    $2
 	</form>
 snippet calendar
@@ -198,23 +190,13 @@ snippet sheet
 	<sheet>
 	    ${1}
 	</sheet>
-snippet menuitem Action < 7.0
-	<menuitem id="menu_${1:ir_model_data}" 
-	    parent="menu_${2:menu_parent}"
-	    sequence="${3:20}"
-	    action="action_${4:Action}"/>
-snippet menuitem Action >= 7.0
+snippet menuitem Action
 	<menuitem id="${1:ir_model_data}_menu" 
 	    parent="${2:menu_parent}_menu"
 	    sequence="${3:20}"
 	    name="${5:Label}"
 	    action="${4:Action}_action"/>
-snippet menuitem Name < 7.0
-	<menuitem id="menu_${1:ir_model_data}" 
-	    parent="menu_${2:menu_parent}"
-	    sequence="${3:20}"
-	    name="${4:Label}"/>
-snippet menuitem Name >= 7.0
+snippet menuitem Name
 	<menuitem id="${1:ir_model_data}_menu" 
 	    parent="${2:menu_parent}_menu"
 	    sequence="${3:20}"
@@ -237,41 +219,7 @@ snippet wizard <wizard/>
 	    string="${2:label}"
 	    model="${3:ir.model}"
 	    name="${4:wizard_name}"/>
-snippet wizard osv_memory menu < 7.0
-	<record id="view_${1:model}_form" model="ir.ui.view">
-	    <field name="name">$2.form</field>
-	    <field name="model">${2:Model}</field>
-	    <field name="type">form</field>
-	    <field name="priority" eval="8"/>
-	    <field name="arch" type="xml">
-		<form string="${3:Label}">
-		    <field name="${4:name}"/>
-		    <separator string="" colspan="4" />
-		    <group colspan="4" col="6">
-		        <label string ="" colspan="2"/>
-		        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-		        <button icon="terp-gtk-go-back-rtl" string="Start" name="${5:_continue}" type="object"/>
-		    </group>
-		</form>
-	    </field>
-	</record>
-	
-	<record id="action_$1_view" model="ir.actions.act_window">
-	    <field name="name">$3</field>
-	    <field name="type">ir.actions.act_window</field>
-	    <field name="res_model">$2</field>
-	    <field name="view_type">form</field>
-	    <field name="view_mode">form</field>
-	    <field name="domain">[]</field>
-	    <field name="context">{}</field>
-	    <field name="target">new</field>
-	</record>
-	
-	<menuitem id="menu_$1_wizard"
-	    parent="menu_${6:menu_parent}"
-	    sequence="${7:20}"
-	    action="action_$1_view"/>
-snippet wizard osv_memory menu >= 7.0
+snippet wizard osv_memory menu
 	<record id="${1:model}_view_form" model="ir.ui.view">
 	    <field name="name">$2.view.form</field>
 	    <field name="model">${2:Model}</field>
@@ -621,7 +569,7 @@ snippet widget one2many_list
 	widget="one2many_list"
 snippet widget password
 	password="1"
-snippet widget statusbar (>= 7.0)
+snippet widget statusbar
 	widget="statusbar"
 snippet operator
 	operator="+"
@@ -646,7 +594,7 @@ snippet workflow search
 	    <value model="$2" search="[('${3:name}','${4:=}','${5:TEXT}')]"/>
 	</worklow>
 snippet delete id
-	<delete model="${1:model}" id="${2:ir_model_data}"/>
+	<delete id="${1:ir_model_data}" model="${2:model}"/>
 snippet delete search
 	<delete model="${1:model}" search="[('${2:field}', '${3:operator}', '${4:value}')]"/>
 snippet icon gtk-apply

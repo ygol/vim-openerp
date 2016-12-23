@@ -6,17 +6,11 @@ snippet imp
 	import ${1:module}
 snippet from
 	from ${1:module} import ${2:class}
-snippet osv <= 6.0
-	from osv import osv
-	from osv import fields
-	${1}
-snippet osv >= 6.1
-	from openerp.osv import osv
-	from openerp.osv import orm
-	from openerp.osv import fields
-	${1}
-snippet osv >= 8.0
+snippet osv with exceptions
 	from openerp import models, api, fields, exceptions
+	${1}
+snippet osv without exceptions
+	from openerp import models, api, fields
 	${1}
 # Module Docstring
 snippet docs
@@ -71,52 +65,14 @@ snippet rule
 #
 # Define class for OpenObject
 #
-snippet oo OpenObject Class < 7.0
-	class ${1:ClassName}(osv.osv):
-		_name = '${2:ObjectName}'
-		_description = '${3}'
-	
-		_columns = {
-			${4}
-		}
-	
-	$1()
-	
-snippet oo OpenObject Class == 7.0
-	class ${1:ClassName}(orm.Model):
-		_name = '${2:ObjectName}'
-		_description = '${3}'
-	
-		_columns = {
-			${4}
-		}
-	
-snippet oo OpenObject Class >= 8.0
+snippet oo OpenObject Class
 	class ${1:ClassName}(models.Model):
 		_name = '${2:ObjectName}'
 		_description = '${3}'
 	
 		${4}
 	
-snippet ooi OpenObject Class Inherit < 7.0
-	class ${1:ClassName}(osv.osv):
-		_inherit = '${2:ObjectName}'
-	
-		_columns = {
-			${3}
-		}
-	
-	$1()
-	
-snippet ooi OpenObject Class Inherit == 7.0
-	class ${1:ClassName}(orm.Model):
-		_inherit = '${2:ObjectName}'
-	
-		_columns = {
-			${3}
-		}
-	
-snippet ooi OpenObject Class Inherit >= 8.0
+snippet ooi OpenObject Class Inherit
 	class ${1:ClassName}(models.Model):
 		_inherit = '${2:ObjectName}'
 	
@@ -133,40 +89,14 @@ snippet oom Wizard osv_memory
 	
 	$1()
 	
-snippet oom Wizard TransientModel == 7.0
-	class ${1:ClassName}(orm.TransientModel):
-		_name = '${2:ObjectName}'
-		_description = '${3:Description}'
-	
-		_columns = {
-			${4}
-		}
-	
-snippet oom Wizard TransientModel >= 8.0
+snippet oom Wizard TransientModel
 	class ${1:ClassName}(models.TransientModel):
 		_name = '${2:ObjectName}'
 		_description = '${3:Description}'
 	
 		${4}
 	
-snippet oomi Open Object\Wizard Inherit
-	class ${1:ClassName}(osv.osv_memory):
-		_inherit = '${2:ObjectName}'
-	
-		_columns = {
-			${3}
-		}
-	
-	$1()
-	
-snippet oomi Wizard TransientModel Inherit == 7.0
-	class ${1:ClassName}(orm.TransientModel):
-		_name = '${2:ObjectName}'
-		_description = '${3:Description}'
-	
-		${4}
-	
-snippet oomi Wizard TransientModel Inherit >= 8.0
+snippet oomi Wizard TransientModel Inherit
 	class ${1:ClassName}(models.TransientModel):
 		_inherit = '${2:ObjectName}'
 	
@@ -174,48 +104,6 @@ snippet oomi Wizard TransientModel Inherit >= 8.0
 	
 snippet this (use in wizard)
 	this = self.browse(cr, uid, ids[0], context=context)
-#
-# Define type of fields
-#
-snippet fields fields.char
-	'${1:fieldname}': fields.char('${2:Label}', size=${3:64}, ${5}help='${4:Help note}'),${6}
-snippet fields fields.integer
-	'${1:fieldname}': fields.integer('${2:Label}', ${4}help='${3:Help note}'),${5}
-snippet fields fields.float
-	'${1:fieldname}': fields.float('${2:Label}', digits_compute=dp.get_precision('${3:PrecisionName}'), ${5}help='${4:Help note}'),${6}
-snippet fields fields.boolean
-	'${1:fieldname}': fields.boolean('${2:Label}', ${4}help='${3:Help note}'),${5}
-snippet fields fields.date
-	'${1:fieldname}': fields.date('${2:Label}', ${4}help='${3:Help note}'),${5}
-snippet fields fields.datetime
-	'${1:fieldname}': fields.datetime('${2:Label}', ${4}help='${3:Help note}'),${5}
-snippet fields fields.selection
-	'${1:fieldname}': fields.selection(${2:[('', '')]}, '${3:Label}', ${5}help='${4:Help note}'),${6}
-snippet fields fields.many2one
-	'${1:fieldname}_id': fields.many2one('${2:ObjectName}', '${3:Label}', ${5}help='${4:Help note}'),${6}
-snippet fields fields.many2many
-	'${1:fieldname}_ids': fields.many2many('${2:ObjectName}', '${3:TableRel}', '${4:src_id}', '${5:dst_id}', '${6:Label}', ${8}help='${7:Help note}'),${9}
-snippet fields fields.one2many
-	'${1:fieldname}_ids': fields.one2many('${2:ObjectName}', '${3:fieldname}_id', '${4:Label}', ${6}help='${5:Help note}'),${7}
-snippet fields fields.function
-	'${1:fieldname}': fields.function(${2:FunctionName},
-					    method=${3:True},
-					    string='${4:label}',
-					    type='${5:float}',
-					    store=${6:False},${8}
-					    help='${7:Help note}'),${9}
-snippet fields fields.related
-	'${1:fieldname}': fields.related('${2:field in}', '${3:field rel}', type='${4:many2one}', ${5:relation='res.partner'},
-					    string='${6:Label}', ${8}help='${7:Help note}'),${9}
-snippet fields fields.property
-	'${1:fieldname}': fields.property('${2:object}', method=${3:True},
-			    string='${4:label}', type='${5:many2one}', ${7}help='${6:Help note}'),${8}
-snippet fields fields.text
-	'${1:fieldname}': fields.text('${2:Label}', ${4}help='${3:Help note}'),${5}
-snippet fields fields.binary
-	'${1:fieldname}': fields.binary('${2:Label}', ${4}help='${3:Help note}'),${5}
-snippet fields fields.reference
-	'${1:fieldname}': fields.reference('${2:Label}', selection=${3:[('', '')]}, size=128, ${5}help='${4:Help note}'),${6}
 #
 # Define type of fields (New API)
 #
@@ -257,12 +145,10 @@ snippet readonly
 	readonly=True, ${1}
 snippet required
 	required=True, ${1}
+snippet translate import
+	from openerp.tools.translate import _
 snippet translate argument
 	translate=True, ${1}
-snippet translate import OpenERP <= 6.0
-	from tools.translate import _
-snippet translate import OpenERP >= 6.1
-	from openerp.tools.translate import _
 snippet dp
 	digits_compute=dp.get_precision('${1:PrecisionName}'), ${2}
 snippet digits digits
@@ -292,230 +178,94 @@ snippet relate
 snippet default
 	default='${1:value}', ${2}
 #
-# Define function in osv.osv
+# Define function in model
 #
 snippet func def search
-	def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
-	    """
-	    ${1:Comment}
-	    """
+	def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
 	    if context is None:
 	        context = {}
 	
-	    res = super(${2:ClassName}, self).search(cr, uid, args, offset=offset, limit=limit, order=order, context=context, count=count)
+	    res = super(${2:ClassName}, self).search(cr, user, args, offset=offset, limit=limit, order=order, context=context, count=count)
 	    ${3}
 	    return res
 snippet func def read
-	def read(self, cr, uid, ids, fields=None, context=None, load='_classic_read'):
-	    """
-	    #TODO make doc string
-	    ${2:Comment this}
-	    """
-	    if context is None:
-	        context = {}
-	    res = super(${1:ClassName}, self).read(cr, uid, ids, fields, context=context)
-	    #TODO : process on result
+	@api.v8
+	def read(self, fields=None, load='_classic_read'):
+	    res = super(${1:ClassName}, self).read(fields, load=load)
 	    ${3}
 	    return res
 snippet func def create
-	def create(self, cr, uid, values, context=None):
-	    """
-	    #TODO make doc string
-	    ${2:Comment this}
-	    """
-	    if context is None:
-	        context = {}
-	    #TODO : process on result
-	    id = super(${1:ClassName}, self).create(cr, uid, values, context=context)
+	@api.model
+	@api.returns('self', lambda value: value.id)
+	def create(self, vals):
+	    res = super(${1:ClassName}, self).create(vals)
 	    ${3}
-	    return id
+	    return res
 snippet func def write
-	def write(self, cr, uid, ids, values, context=None):
-	    """
-	    #TODO make doc string
-	    ${2:Comment this}
-	    """
-	    if context is None:
-	        context = {}
-	    #TODO : process on result
-	    res = super(${1:ClassName}, self).write(cr, uid, ids, values, context=context)
+	@api.multi
+	def write(self,vals):
+	    res = super(${1:ClassName}, self).write(vals)
 	    ${3}
 	    return res
 snippet func def unlink
 	def unlink(self, cr, uid, ids, context=None):
-	    """
-	    #TODO make doc string
-	    ${2:Comment this}
-	    """
 	    if context is None:
 	        context = {}
-	    #TODO: process before delete resource
 	    ${3}
 	    res = super(${1:ClassName}, self).unlink(cr, uid, ids, context=context)
 	    return res
 snippet func def copy
+	@api.returns('self', lambda value: value.id)
 	def copy(self, cr, uid, id, default=None, context=None):
-	    """
-	    #TODO make doc string
-	    ${2:Comment this}
-	    """
 	    if context is None:
 	        context = {}
-	    #TODO : process on result
 	    ${3}
 	    return super(${1:ClassName}, self).copy(cr, uid, id, default, context=context)
 snippet func def default_get
-	def default_get(self, cr, uid, fields_list, context=None):
-	    """
-	    #TODO make doc string
-	    ${1:Comment this}
-	    """
-	    if context is None:
-	        context = {}
-	    values = super(${2:ClassName}, self).default_get(cr, uid, fields_list, context=context)
+	@api.model
+	def default_get(self, fields_list):
+	    values = super(${2:ClassName}, self).default_get(fields_list)
 	    ${3}
 	    return values
 snippet func def fields_get
-	def fields_get(self, cr, uuid, fields=None, context=None):
-	    """
-	    #TODO make doc string
-	    ${2:Comment this}
-	    """
+	def fields_get(self, cr, user, allfields=None, context=None, write_access=True, attributes=None):
 	    if context is None:
 	        context = {}
-	    #TODO : process on result
 	    ${3}
-	    return super(${1:ClassName}, self).fields_get(cr, uid, fields, context, read_access)
+	    return super(${1:ClassName}, self).fields_get(cr, user, allfields, context, write_access, attributes)
 snippet func def init
 	def init(self, cr):
-	    """
-	    ${2:Comment this}
-	    """
-	    #TODO : process on result
 	    cr.execute("""CREATE OR REPLACE VIEW ${1:View} AS (
 	            ${3:SELECT...})
 	    """)
 	${4}
-snippet func def _name_get
-	def name_get(self, cr, uid, ids, context=None):
-	    """
-	    #TODO make doc string
-	    ${1:Comment this}
-	    """
-	    if context is None:
-	        context = {}
-	    if not len(ids):
-	        return []
-	    #TODO : search on name field or _res_name fields
-	    #and make a result [(id, name), (id, name), ...] 
-	    reads = self.read(cr, uid, ids, [self._rec_name], context, load='_classic_write')]
-	    res = []
+snippet func def name_get
+	@api.multi
+	def name_get(self):
+	    res = super(${1:ClassName}, self).name_get()
 	    ${2}
-	    for read in reads:
-	        res.append( ( read['id'], read[self._rec_name]) )
 	    return res
-snippet func def _name_search
-	def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
-	    """
-	    #TODO make doc string
-	    ${1:Comment this}
-	    """
-	    #TODO: make a search on specific fields and get ids
-	    if args is None:
-	        args=[]
-	    if context is None:
-	        context = {}
-	    ids = []
-	    if name:
-	        ids = self.search(cr, uid, [('code', 'ilike', name)] + args, limit=limit)
-	    if not ids:
-	        ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit)
-	    return self.name_get(cr, uid, ids, context=context)
+snippet func def name_search
+	@api.model
+	def name_search(self, name, args=None, operator='ilike', limit=100):
+	    res = super(${1:ClassName}, self).name_search(name, args, operator, limit)
 	    ${2}
+	    return res
 snippet func on_change
-	def onchange_${1:fields}(self, cr, uid, ids, $1, context=None):
-	    """
-	    #TODO make doc string
-	    ${2:Comment this/compute new values from the db/system}
-	    """
-	    #TODO : compute new values from the db/system
-	    if context is None:
-	        context = {}
-	    ${3}
-	    return {
-	        'value':{
-	            'field_1': res1
-	            'field_2': res2
-	        }
-	    }
-snippet func fields.function
-	def _get_${1:field_name}(self, cr, uid, ids, field_name, args, context=None):
-	    result = {}
-	    for ${2:name} in self.browse(cr, uid, ids, context=context):
-	        result[$2.id] = ${3:value}
-	
-	    return result
-snippet func fields.function multi
-	def _get_${1:function_name}(self, cr, uid, ids, field_name, args, context=None):
-	    result = {}
-	    for ${2:name} in self.browse(cr, uid, ids, context=context):
-	        result[$2.id] = {
-	            ${4:field_name}: ${3:value},
-	        }
-	
-	    return result
-snippet func fields_view_get v 5.0
-	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-	    """
-	    Comment here
-	    """
-	    # use lxml to compose the arch XML
-	    arch = ${1:XML HERE}
-	    fields = ${2:FIELDS HERE}
-	    tb = {'print': [], 'action': [], 'relate': []}
-	    result = {
-	        'arch': arch,
-	        'fields': fields,
-	        'toolbar': tb,
-	    }
-	    return result
-snippet func fields_view_get v 6.0
+	@api.multi
+	def onchange(self, values, field_name, field_onchange):
+	    res = super(${1:ClassName}, self).onchange(values, field_name, field_onchange)
+	    ${2}
+	    return res
+snippet func fields_view_get
 	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-	    """
-	    Comment here
-	    """
-	    # use lxml to compose the arch XML
-	    arch = ${1:XML HERE}
-	    fields = ${2:FIELDS HERE}
-	    tb = {'print': [], 'action': [], 'relate': []}
-	    result = {
-	        'arch': arch,
-	        'fields': fields,
-	        'toolbar': tb,
-	    }
-	    return result
-###
-## Common method define in osv.osv
-##
-snippet read
-	self.read(cr, uid, ${1:ids}, ['${2:field}'], context=context)${3}
-snippet browse
-	self.browse(cr, uid, ${1:ids}, context=context)${2}
-snippet search
-	self.search(cr, uid, [('${1:state}', '${2:=}', '${3:done}')], context=context)${4}
-snippet create
-	id = self.create(cr, uid, ${1:vals}, context=context)${2}
-snippet write
-	self.write(cr, uid, ${1:ids}, ${2:vals}, context=context)${3}
-snippet unlink
-	self.unlink(cr, uid, ${1:ids}, context=context)${2}
-snippet copy
-	self.copy(cr, uid, ${1:ids}, ${2:default}, context=context)${3}
-snippet perm_read
-	self.perm_read(cr, uid, [${1:id}], context=context)${2}
-###
-## Common methods defined in Model (New API)
-##
+	    res = super(${1:ClassName}, self).fields_view_get(cr, uid, view_id, context, toolbar, submenu)
+	    ${2}
+	    return res
+
+#
+# Common methods defined in Model (New API)
+#
 snippet Func search (other model)
 	self.env['${1:model}'].search([${2:('name', '=', name)}])
 snippet Func browse (other model)
@@ -539,7 +289,7 @@ snippet Func write (same model)
 snippet Func copy (same model)
 	self.copy(${2:values})
 #
-# Define all variables in osv.osv begin by _
+# Define all variables in Model begin by _
 #
 snippet _ _auto
 	_auto = False
@@ -588,41 +338,23 @@ snippet _ _sql
 	_sql = """${1:CREATE TABLE .....}"""
 snippet _ _log_access
 	_log_access = False
-snippet . search (Old API)
-	.search(cr, uid, ${1:domain}, offset=${2:0}, limit=${3:None}, order=${4:None}, context=${5:context})${6}
-snippet . browse (Old API)
-	.browse(cr, uid, ${1:ids}, context=${2:context})${3}
-snippet . read (Old API)
-	.read(cr, uid, ${1:ids}, ['${2:name}'], context=${3:context})${4}
-snippet . create (Old API)
-	.create(cr, uid, ${1:vals}, context=${2:context})${3}
-snippet . write (Old API)
-	.write(cr, uid, ${1:ids}, ${2:vals}, context=${3:context})${4}
-snippet . unlink (Old API)
-	.unlink(cr, uid, ${1:ids}, context=${2:context})${3}
-snippet . copy (Old API)
-	.copy(cr, uid, ${1:id}, ${2:default}, context=${3:context})${4}
-snippet . search (New API)
+snippet . search
 	.search(${1:domain}, offset=${2:0}, limit=${3:None}, order=${4:None})${5}
-snippet . browse (New API)
+snippet . browse
 	.browse(${1:ids})${2}
-snippet . create (New API)
+snippet . create
 	.create(${1:vals})${2}
-snippet . write (New API)
+snippet . write
 	.write(${1:vals})${2}
-snippet . unlink (New API)
+snippet . unlink
 	.unlink()${1}
-snippet . copy (New API)
+snippet . copy
 	.copy(${1:default})${2}
 ###
 ## define exception
-snippet except raise osv.except_osv(title, message) (Old API)
-	raise osv.except_osv(_('${1:Error}'), _('${2:Message}'))
-snippet except raise wizard.except_wizard(title, message) (Very old API)
-	raise wizard.except_wizard(_('${1:Error}'), _('${2:Message}'))
-snippet except raise exceptions.Warning(message) (New API)
+snippet except raise exceptions.Warning(message)
 	raise exceptions.Warning(_('${1:Message}'))
-snippet except raise exceptions.RedirectWarning(message, action, button_text) (New API)
+snippet except raise exceptions.RedirectWarning(message, action, button_text)
 	raise exceptions.RedirectWarning(_('${1:Message}'), ${2:action_id}, _('${3:Button Text}'))
 ###
 ## Cursor
@@ -656,15 +388,13 @@ snippet !context
 # Usefull Snippet
 #
 snippet active
-	'active': fields.boolean('${1:Active}', help='if check, ${2:this object is always available}'),${3}
+	active = fields.Boolean('${1:Active?}', default=True, readonly=True)
 snippet sequence
-	'sequence': fields.integer('${1:Sequence}'),${2}
+	sequence = fields.Integer('${1:Sequence}')
 snippet color
-	'color': fields.integer('${1:Colour}'),
-	# PLEASE ADD A DEFAULT VALUE 0 FOR THE color FIELD!
+	color = fields.Integer('${1:Color}', default=0)
 snippet state
-	'state': fields.selection(${1:[('', '')]}, '${2:Label}', help='${3:Help note}'),${4}
-	# PLEASE ADD A DEFAULT VALUE (e.g. draft) FOR THE state FIELD!
+	state = fields.Selection(${1:[('', '')]}, '${2:Label}', help='${3:Help note}', default=i'${4:draft}')
 snippet logger
 	import netsvc
 	logger = netsvc.Logger()
@@ -692,7 +422,7 @@ snippet super
 	super(${1:ClassName}, self).${2:methodName}(cr, uid, ${3:ids}, ${4}context=context)${5}
 snippet def
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
-	    """${3:docstring for $1}"""
+	    '''${3:docstring for $1}'''
 	    ${4:pass}
 snippet deff
 	def ${1:fname}(${2:`indent('.') ? 'self' : ''`}):
@@ -764,9 +494,17 @@ snippet pdb
 	import pdb
 	pdb.set_trace()
 snippet date to_string
-	fields.Datetime.to_string(${1:datetime instance})${2}
+	fields.Date.to_string(${1:datetime instance})${2}
 snippet date from_string
+	fields.Date.from_string(${1:datetime string})${2}
+snippet date today
+	fields.Date().today()
+snippet datetime to_string
+	fields.Datetime.to_string(${1:datetime instance})${2}
+snippet datetime from_string
 	fields.Datetime.from_string(${1:datetime string})${2}
+snippet datetime today
+	fields.Datetime().today()
 # workflow
 snippet trg trg_write
 	wf_service = netsvc.LocalService("workflow")
