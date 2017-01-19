@@ -22,6 +22,3 @@ $ vim-addons install python_bike
 Adding helptag in vim 
 
 :helptags ~/.vim/doc
-
-Here a new line of text for my test
-A second line resulting from PR review process
